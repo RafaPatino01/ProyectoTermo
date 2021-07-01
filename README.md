@@ -1,6 +1,6 @@
 # ProyectoTermo
 Proyecto final modelos termodinámicos
 
-Autores: 
+Autores: <br>
 Rafael Patino <br>
 Ramón Ruiz
