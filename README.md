@@ -2,5 +2,5 @@
 Proyecto final modelos termodinámicos
 
 Autores: 
-Rafael Patino 
+Rafael Patino <br>
 Ramón Ruiz
