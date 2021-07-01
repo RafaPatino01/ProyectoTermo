@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Proyecto Modelos Termodinámicos</title>
+
+    <link href="styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+      window.Promise ||
+        document.write(
+          '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+        )
+      window.Promise ||
+        document.write(
+          '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+        )
+      window.Promise ||
+        document.write(
+          '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+        )
+    </script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
+
+    <script>
+      // Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+      // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+      var _seed = 42;
+      Math.random = function() {
+        _seed = _seed * 16807 % 2147483647;
+        return (_seed - 1) / 2147483646;
+      };
+    </script>
+
+    <script>
+  var lastDate = 0;
+  var data = [];
+  var TICKINTERVAL = 1;
+  let XAXISRANGE = 9;
+  
+  function getDayWiseTimeSeries(baseval, count, yrange) {
+    var i = 0;
+    while (i < count) {
+      var x = baseval;
+      var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+  
+      data.push({
+        x, y
+      });
+      lastDate = baseval
+      baseval += TICKINTERVAL;
+      i++;
+    }
+  }
+  
+  getDayWiseTimeSeries(0, 10, {
+    min: 10,
+    max: 90
+  })
+
+  </script>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <!-- Gráfica -->
+      <div class="row justify-content-center">
+        <div class="col-md-10 p-3">
+          <div id="chart"></div>
+          <p class="text-center mt-3 lead">Tiempo [s]</p>
+        </div>
+        <div class="col-md-2">
+          <p class="lead" style="margin-top: 10em;">Temperatura [°C]</p>
+        </div>
+      </div>
+
+
+      <div class="row mt-3">
+
+        <!-- Parámetros -->
+        <div class="col-md-6 mr-3">
+          <div class="bg-light border p-3 m-0">
+            <p class="lead">Parámetros:</p>
+            <div class="mt-5 btn btn-primary" onclick="start();">Comenzar</div>
+          </div>
+        </div>
+
+        <!-- Tabla Resultados -->
+        <div class="col-md-5 bg-light border p-3">
+
+          <div class="row pr-3 pl-3 m-0">
+            <div class="col-6 border bg-white text-center">Tiempo [S]</div>
+            <div class="col-6 border bg-white text-center">Temperatura [°C]</div>
+          </div>
+          <div class="row pr-3 pl-3 m-0">
+            <div class="col-6 border bg-white text-center">0</div>
+            <div class="col-6 border bg-white text-center">0</div>
+          </div>
+          
+
+        </div>
+        
+      </div>
+    </div>
+    
+
+    <script>
+      
+        var options = {
+          series: [{
+          data: data.slice()
+        }],
+          chart: {
+          id: 'realtime',
+          height: 350,
+          type: 'line',
+          animations: {
+            enabled: true,
+            easing: 'linear',
+            dynamicAnimation: {
+              speed: 1000
+            }
+          },
+          toolbar: {
+            show: false
+          },
+          zoom: {
+            enabled: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'smooth'
+        },
+        title: {
+          text: 'Curva del awa',
+          align: 'left'
+        },
+        markers: {
+          size: 0
+        },
+        xaxis: {
+          type: 'numeric',
+          range: 60,
+        },
+        yaxis: {
+          max: 100,
+          opposite: true,
+        },
+        legend: {
+          show: false
+        },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+      
+        // Onclick function
+        function start() {
+          flag++;
+        }
+
+        // Data to update
+        flag = 0;
+        time = 0;
+        temp = 0;
+        mydata = [{x: 0, y: 0},{x: 0, y: 0},{x: 0, y: 0},{x: 0, y: 0},{x: 0, y: 0},{x: 0, y: 0}];
+        
+        // Every second iteration
+        window.setInterval(function () {
+
+          mydata.push({x: time, y: temp});
+
+          if(flag != 0) {
+            time++;
+            temp = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
+          }
+
+          chart.updateSeries([{
+            data: mydata
+          }])
+
+          console.log(data)
+        }, 1000)
+
+    </script>
+
+    
+  </body>
+</html>
