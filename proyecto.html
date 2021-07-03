@@ -91,23 +91,91 @@
       <div class="row mt-3">
 
         <!-- Parámetros -->
-        <div class="col-md-6 mr-3">
+        <div class="col-md-5 mr-3">
           <div class="bg-light border p-3 m-0">
             <p class="lead">Parámetros:</p>
-            <div class="mt-5 btn btn-primary" onclick="start();">Comenzar</div>
+            
+            <div class="row w-100 mb-3">
+              <div class="col-5 border-right text-right pt-2">Temp inicial</div>
+              <div class="col-7">
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">[ºC]</div>
+                  </div>
+                  <input type="text" class="form-control" id="ti">
+                </div>      
+              </div>
+            </div>
+
+            <div class="row w-100 mb-3">
+              <div class="col-5 border-right text-right pt-2">Masa inicial</div>
+              <div class="col-7">
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">[Kg]</div>
+                  </div>
+                  <input type="text"class="form-control" id="mi">
+                </div>          
+              </div>
+            </div>
+
+            <div class="row w-100 mb-3">
+              <div class="col-5 border-right text-right pt-2">Potencia</div>
+              <div class="col-7"> 
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">[W]</div>
+                  </div>
+                  <input type="text" class="form-control" id="potencia">
+                </div>
+              </div>
+            </div>
+
+            <div class="row w-100 mb-3">
+              <div class="col-5 border-right text-right pt-2">Presión ATM</div>
+              <div class="col-7">
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">[Pa]</div>
+                  </div>
+                  <input type="text" class="form-control" id="p_atm">
+                </div>           
+              </div>
+            </div>
+
+            <div class="row w-100">
+              <div class="col-5 border-right text-right pt-2">Intervalo de tiempo</div>
+              <div class="col-7">              
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">[s]</div>
+                  </div>
+                  <input type="text" class="form-control" id="intervalo">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row w-100 justify-content-end mt-0">
+              <div class="col-4 pr-3">              
+                  <div class="mt-5 btn btn-primary" onclick="start();">Comenzar</div>
+              </div>
+            </div>
+
           </div>
         </div>
 
         <!-- Tabla Resultados -->
-        <div class="col-md-5 bg-light border p-3">
+        <div class="col-md-6 bg-light border p-3">
 
           <div class="row pr-3 pl-3 m-0">
-            <div class="col-6 border bg-white text-center">Tiempo [S]</div>
-            <div class="col-6 border bg-white text-center">Temperatura [°C]</div>
+            <div class="col-4 border bg-white text-center">Tiempo [S]</div>
+            <div class="col-4 border bg-white text-center">Temperatura [°C]</div>
+            <div class="col-4 border bg-white text-center">Masa [Kg]</div>
           </div>
           <div class="row pr-3 pl-3 m-0">
-            <div class="col-6 border bg-white text-center">0</div>
-            <div class="col-6 border bg-white text-center">0</div>
+            <div class="col-4 border bg-white text-center">0</div>
+            <div class="col-4 border bg-white text-center">0</div>
+            <div class="col-4 border bg-white text-center">0</div>
           </div>
           
 
@@ -148,7 +216,7 @@
           curve: 'smooth'
         },
         title: {
-          text: 'Curva del awa',
+          text: 'Proyecto termo',
           align: 'left'
         },
         markers: {
@@ -169,20 +237,30 @@
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
-      
-        // Onclick function
-        function start() {
-          flag++;
-        }
 
         // Data to update
         flag = 0;
         time = 0;
         temp = 0;
         mydata = [{x: 0, y: 0},{x: 0, y: 0},{x: 0, y: 0},{x: 0, y: 0},{x: 0, y: 0},{x: 0, y: 0}];
-        
-        // Every second iteration
-        window.setInterval(function () {
+
+        chart.updateSeries([{
+          data: mydata
+        }]);
+
+        // Onclick function
+        function start() {
+          flag++; //Comenzar a graficar
+
+          var ti = parseFloat(document.getElementById("ti"));
+          var mi = parseFloat(document.getElementById("mi"));
+          var potencia = parseFloat(document.getElementById("potencia"));
+          var p_atm = parseFloat(document.getElementById("p_atm"));
+          var intervalo = parseFloat(document.getElementById("intervalo"));
+          var tf = 0;
+
+          // Every second iteration
+          window.setInterval(function () {
 
           mydata.push({x: time, y: temp});
 
@@ -195,8 +273,12 @@
             data: mydata
           }])
 
-          console.log(data)
-        }, 1000)
+          console.log(intervalo);
+
+          }, intervalo)
+
+        }
+
 
     </script>
 
