@@ -156,6 +156,9 @@
             </div>
             
             <div class="row w-100 justify-content-end mt-0">
+              <div class="col-4">              
+                <div class="mt-5 btn btn-danger" onclick="location.reload();">Reiniciar</div>
+              </div>
               <div class="col-4 pr-3">              
                   <div class="mt-5 btn btn-primary" onclick="start();">Comenzar</div>
               </div>
@@ -172,14 +175,7 @@
             <div class="col-4 border bg-white text-center">Temperatura [°C]</div>
             <div class="col-4 border bg-white text-center">Masa [Kg]</div>
           </div>
-          <div class="row pr-3 pl-3 m-0" id="data-table">
-            <!-- <div class="col-4 border bg-white text-center">0</div>
-            <div class="col-4 border bg-white text-center">0</div>
-            <div class="col-4 border bg-white text-center">0</div>
-            <div class="col-4 border bg-white text-center">1</div>
-            <div class="col-4 border bg-white text-center">1</div>
-            <div class="col-4 border bg-white text-center">1</div> -->
-          </div>
+          <div class="row pr-3 pl-3 m-0" id="data-table"></div>
           
 
         </div>
@@ -227,7 +223,7 @@
         },
         xaxis: {
           type: 'numeric',
-          range: 60,
+          range: 120,
         },
         yaxis: {
           max: 100,
@@ -259,7 +255,7 @@
           var mi = parseFloat(document.getElementById("mi").value);
           var potencia = parseFloat(document.getElementById("potencia").value);
           var p_atm = parseFloat(document.getElementById("p_atm").value);
-          var intervalo = parseFloat(document.getElementById("intervalo").value) * 1000;
+          var intervalo = parseFloat(document.getElementById("intervalo").value);
           var tf = 0;
           var tsat = Math.pow(((1/373.14)-(0.00874*Math.log(p_atm/101325)/40.66)),-1) - 273.15;
           var h_fg = 2256.4*((1-(tsat/647.096))/(1-0.57665623));
@@ -267,47 +263,54 @@
           temp = ti;
           console.log(tsat);
 
-          // Every second iteration
+          // iteration
           window.setInterval(function () {
 
-          mydata.push({x: time, y: temp});
+            mydata.push({x: time, y: temp});
 
-          if(flag != 0 && temp <= tsat) {
+            if(flag != 0){
+              if(temp <= tsat) {
 
-            document.getElementById("data-table").innerHTML += `
-            <div class="col-4 border bg-white text-center">`+ time +`</div>
-            <div class="col-4 border bg-white text-center">`+ temp.toFixed(4) +`</div>
-            <div class="col-4 border bg-white text-center">`+ mi +`</div>
-            `
-            time+=(intervalo/1000);
-            temp = (potencia * (intervalo/1000))/(mi*4186) + ti;
-            ti = temp;
-            // temp = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
+                document.getElementById("data-table").innerHTML += `
+                <div class="col-4 border bg-white text-center">`+ time +`</div>
+                <div class="col-4 border bg-white text-center">`+ temp.toFixed(4) +`</div>
+                <div class="col-4 border bg-white text-center">`+ mi +`</div>
+                `
+                time+=intervalo;
+                temp = (potencia * (intervalo))/(mi*4186) + ti;
+                ti = temp;
 
-          }
-          else{
-            
-            temp = temp;
-            mf = -((potencia * (intervalo/1000))/h_fg) + mi;
-            mi = mf;
-            document.getElementById("data-table").innerHTML += `
-            <div class="col-4 border bg-white text-center">`+ time +`</div>
-            <div class="col-4 border bg-white text-center">`+ temp.toFixed(4) +`</div>
-            <div class="col-4 border bg-white text-center">`+ mf +`</div>
-            `
-            time+=(intervalo/1000);
-            if(mf <= 0){
-              //Falta terminarlo xd
+                chart.updateSeries([{
+                  data: mydata
+                }]);
+              }
+              else {
+                temp = tsat;
+                mf = -((potencia * (intervalo))/h_fg) + mi;
+                mi = mf;
+
+                if(mf < 0){ mf = 0;}
+
+                document.getElementById("data-table").innerHTML += `
+                <div class="col-4 border bg-white text-center">`+ time +`</div>
+                <div class="col-4 border bg-white text-center">`+ temp.toFixed(4) +`</div>
+                <div class="col-4 border bg-white text-center">`+ mf.toFixed(4) +`</div>
+                `
+                time+=intervalo;
+                if(mf <= 0){
+                  alert("proceso terminado");
+                  flag = 0;
+                }
+                else {
+                  chart.updateSeries([{
+                    data: mydata
+                  }]);
+                }
+              }
             }
-          }
-
-          chart.updateSeries([{
-            data: mydata
-          }])
-
-          console.log(temp);
-
-          }, intervalo)
+            
+          
+          }, 1000)
 
         }
 
