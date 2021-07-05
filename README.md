@@ -18,14 +18,14 @@ chart.updateSeries([{
   data: mydata
 }]);
 ```
-
-<br>
-La función start() se llama cuando es oprimido el botón de comenzar
-
+La función start() se llama cuando es oprimido el botón de comenzar.
 ``` Javascript
 function start() {
-  flag++; //Comenzar a graficar
+  flag++;
 
+```
+Se accede a los valores que el usuario ingresó mediante la interfaz y se hace el cálculo de la temp sat, así como hfg.
+``` Javascript
   var ti = parseFloat(document.getElementById("ti").value);
   var mi = parseFloat(document.getElementById("mi").value);
   var potencia = parseFloat(document.getElementById("potencia").value);
@@ -36,9 +36,11 @@ function start() {
   var h_fg = 2256.4 * Math.pow(((1-((tsat+273.15)/647.096))/(1-0.57665623)),0.375);
   var mf = 0;
   temp = ti;
-  console.log(tsat);
-  console.log(h_fg);
-  // iteration
+
+```
+Aquí se inicializa la función de actualizado constante (para nutrir la gráfica y la tabla). <br>
+Contamos con una bandera que nos indica si debemos seguir graficando y un condicional para escoger Qs o Ql.
+``` Javascript
   window.setInterval(function () {
 
     mydata.push({x: time, y: temp.toFixed(4)});
