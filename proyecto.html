@@ -156,10 +156,13 @@
             </div>
             
             <div class="row w-100 justify-content-end mt-0">
-              <div class="col-4">              
+              <div class="col-4 text-center pr-3">
+                <div class="mt-5 btn btn-success" onclick="">Documentación</div>
+              </div>
+              <div class="col-4 pl-3">              
                 <div class="mt-5 btn btn-danger" onclick="location.reload();">Reiniciar</div>
               </div>
-              <div class="col-4 pr-3">              
+              <div class="col-4">              
                   <div class="mt-5 btn btn-primary" onclick="start();">Comenzar</div>
               </div>
             </div>
@@ -169,7 +172,7 @@
 
         <!-- Tabla Resultados -->
         <div class="col-md-6 bg-light border p-3">
-
+          <p class="lead text-center">Resultados</p>
           <div class="row pr-3 pl-3 m-0">
             <div class="col-4 border bg-white text-center">Tiempo [S]</div>
             <div class="col-4 border bg-white text-center">Temperatura [°C]</div>
@@ -212,7 +215,8 @@
           enabled: false
         },
         stroke: {
-          curve: 'smooth'
+          curve: 'smooth',
+          // colors:['#F01529','#129BF2']
         },
         title: {
           text: 'Proyecto termo',
@@ -221,12 +225,27 @@
         markers: {
           size: 0
         },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shade: 'light',
+            type: "horizontal",
+            shadeIntensity: 0.5,
+            gradientToColors: ['#F01529','#129BF2'], // optional, if not defined - uses the shades of same color in series
+            inverseColors: false,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [50, 90, 100],
+            colorStops: []
+          }
+        },
         xaxis: {
           type: 'numeric',
-          range: 120,
+          range: 240,
         },
         yaxis: {
-          max: 100,
+          // max: 120,
+          forceNiceScale: true,
           opposite: true,
         },
         legend: {
@@ -258,7 +277,7 @@
           var intervalo = parseFloat(document.getElementById("intervalo").value);
           var tf = 0;
           var tsat = Math.pow(((1/373.14)-(0.00874*Math.log(p_atm/101325)/40.66)),-1) - 273.15;
-          var h_fg = 2256.4*Math.pow(((1-((tsat+273.15)/647.096))/(1-0.57665623)),0.375);
+          var h_fg = 2256.4 * Math.pow(((1-((tsat+273.15)/647.096))/(1-0.57665623)),0.375);
           var mf = 0;
           temp = ti;
           console.log(tsat);
@@ -266,10 +285,10 @@
           // iteration
           window.setInterval(function () {
 
-            mydata.push({x: time, y: temp});
+            mydata.push({x: time, y: temp.toFixed(4)});
 
             if(flag != 0){
-              if(temp <= tsat) {
+              if(temp < tsat) {
 
                 document.getElementById("data-table").innerHTML += `
                 <div class="col-4 border bg-white text-center">`+ time +`</div>
@@ -288,7 +307,7 @@
                 temp = tsat;
                 mf = -((potencia * (intervalo))/(h_fg*1000)) + mi;
                 mi = mf;
-
+                console.log(temp);
                 if(mf < 0){ mf = 0;}
 
                 document.getElementById("data-table").innerHTML += `
