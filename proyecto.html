@@ -258,11 +258,11 @@
           var intervalo = parseFloat(document.getElementById("intervalo").value);
           var tf = 0;
           var tsat = Math.pow(((1/373.14)-(0.00874*Math.log(p_atm/101325)/40.66)),-1) - 273.15;
-          var h_fg = 2256.4*((1-(tsat/647.096))/(1-0.57665623));
+          var h_fg = 2256.4*Math.pow(((1-((tsat+273.15)/647.096))/(1-0.57665623)),0.375);
           var mf = 0;
           temp = ti;
           console.log(tsat);
-
+          console.log(h_fg);
           // iteration
           window.setInterval(function () {
 
@@ -286,7 +286,7 @@
               }
               else {
                 temp = tsat;
-                mf = -((potencia * (intervalo))/h_fg) + mi;
+                mf = -((potencia * (intervalo))/(h_fg*1000)) + mi;
                 mi = mf;
 
                 if(mf < 0){ mf = 0;}
