@@ -1,6 +1,6 @@
 # ProyectoTermo
-Proyecto final: modelos termodinámicos 
-Universidad Panamericana
+Proyecto final: modelos termodinámicos <br>
+Universidad Panamericana <br>
 
 Autores: <br>
 Rafael Patino <br>
