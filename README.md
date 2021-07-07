@@ -42,8 +42,12 @@ Aquí se inicializa la función de actualizado constante (para nutrir la gráfic
 Contamos con una bandera que nos indica si debemos seguir graficando y un condicional para escoger Qs o Ql.
 
 Para Qs despejamos:<br>
-<img src="https://i.ibb.co/DgX4cbL/7f5b9564b088d5656c018dee6ac961d3.png" alt="7f5b9564b088d5656c018dee6ac961d3" border="0"><br>
 
+<div style='background-color: white'>
+<img src="https://i.ibb.co/DgX4cbL/7f5b9564b088d5656c018dee6ac961d3.png" alt="7f5b9564b088d5656c018dee6ac961d3" border="0">
+</div>
+
+  
 Considerando que el calor es potencia por tiempo:<br>
 <img src="http://latex2png.com/pngs/c0fb2692b7ad5b3f3266a59af89116a2.png" border="0"><br>
 
