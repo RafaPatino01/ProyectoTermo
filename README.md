@@ -40,6 +40,15 @@ Se accede a los valores que el usuario ingresó mediante la interfaz y se hace e
 ```
 Aquí se inicializa la función de actualizado constante (para nutrir la gráfica y la tabla). <br>
 Contamos con una bandera que nos indica si debemos seguir graficando y un condicional para escoger Qs o Ql.
+
+Para Qs despejamos:<br>
+<img src="https://i.ibb.co/DgX4cbL/7f5b9564b088d5656c018dee6ac961d3.png" alt="7f5b9564b088d5656c018dee6ac961d3" border="0"><br>
+
+Considerando que el calor es potencia por tiempo:<br>
+<img src="http://latex2png.com/pngs/c0fb2692b7ad5b3f3266a59af89116a2.png" border="0"><br>
+
+<img src="http://latex2png.com/pngs/f4a2167af55531928ba5d04ebcb6730f.png" border="0"><br>
+
 ``` Javascript
   window.setInterval(function () {
 
