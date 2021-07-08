@@ -39,22 +39,16 @@ Se accede a los valores que el usuario ingresó mediante la interfaz y se hace e
 
 ```
 Aquí se inicializa la función de actualizado constante (para nutrir la gráfica y la tabla). <br>
-Contamos con una bandera que nos indica si debemos seguir graficando y un condicional para escoger Qs o Ql. <br><br>
+Contamos con una bandera que nos indica si debemos seguir graficando y un condicional para escoger Calor sensible o Calor latente. <br>
+De esta manera, consideramos que para calor sensible (Qs) la siguiente fórmula es útil, puesto que nos permite conocer la variación de temperatura que es el dato que buscamos reflejar en los resultados
 
 ### Para Qs despejamos:<br><br>
 <img src="https://i.ibb.co/DgX4cbL/7f5b9564b088d5656c018dee6ac961d3.png" alt="7f5b9564b088d5656c018dee6ac961d3" border="0"><br>
-
   
 Considerando que el calor es potencia por tiempo:<br><br>
 <img src="http://latex2png.com/pngs/c0fb2692b7ad5b3f3266a59af89116a2.png" border="0"><br>
 
 <img src="http://latex2png.com/pngs/f4a2167af55531928ba5d04ebcb6730f.png" border="0"><br>
-
-
-### Para Ql despejamos:<br><br>
-<img src="http://latex2png.com/pngs/c4ca1a7d6b93f3b95374de946834dd81.png" border="0"><br><br>
-<img src="http://latex2png.com/pngs/b2e1972a78258878066118821d031a3a.png" border="0"><br><br>
-
 
 ``` Javascript
   window.setInterval(function () {
@@ -77,6 +71,17 @@ Considerando que el calor es potencia por tiempo:<br><br>
           data: mydata
         }]);
       }
+ ```
+ 
+<br>
+Consideramos que para calor latente (Ql) la siguiente fórmula es útil <br>
+
+### Para Ql despejamos:<br><br>
+<img src="http://latex2png.com/pngs/c4ca1a7d6b93f3b95374de946834dd81.png" border="0"><br><br>
+<img src="http://latex2png.com/pngs/b2e1972a78258878066118821d031a3a.png" border="0"><br><br>
+
+
+ ``` Javascript
       else {
         temp = tsat;
         mf = -((potencia * (intervalo))/(h_fg*1000)) + mi;
